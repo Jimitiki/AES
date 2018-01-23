@@ -1,0 +1,43 @@
+#include "aes.h"
+
+char *INPUT_STR = 	"\x00\x11\x22\x33\x44\x55\x66\x77\x88\x99\xAA\xBB\xCC\xDD\xEE\xFF";
+// char *INPUT_STR = 	"\x32\x43\xf6\xa8\x88\x5a\x30\x8d\x31\x31\x98\xa2\xe0\x37\x07\x34";
+// char *KEY_1 = 		"\x2b\x7e\x15\x16\x28\xae\xd2\xa6\xab\xf7\x15\x88\x09\xcf\x4f\x3c";
+// char *KEY_2 = 		"\x8e\x73\xb0\xf7\xda\x0e\x64\x52\xc8\x10\xf3\x2b\x80\x90\x79\xe5\x62\xf8\xea\xd2\x52\x2c\x6b\x7b";
+char *KEY_1 = 		"\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f";
+char *KEY_2 = 		"\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17";
+char *KEY_3 = 		"\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f";
+
+int main(int argc, char **argv)
+{
+
+	byte *input = (byte *) calloc(16, 1);
+	byte *output = (byte *) calloc(16, 1);
+	byte *key = (byte *) calloc(32, 1);
+
+	memcpy(input, INPUT_STR, 16);
+	memcpy(key, KEY_1, 16);
+	cipher(input, output, key, 4);
+	memcpy(input, output, 16);
+	inverse_cipher(input, output, key, 4);
+
+	memcpy(input, INPUT_STR, 16);
+	memcpy(key, KEY_2, 24);
+	cipher(input, output, key, 6);
+	memcpy(input, output, 16);
+	inverse_cipher(input, output, key, 6);
+
+	memcpy(input, INPUT_STR, 16);
+	memcpy(key, KEY_3, 32);
+	cipher(input, output, key, 8);
+	memcpy(input, output, 16);
+	inverse_cipher(input, output, key, 8);
+
+	free(input);
+	free(output);
+	free(key);
+
+	return 0;
+}
+
+
